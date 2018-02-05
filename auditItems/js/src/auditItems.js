@@ -1,5 +1,5 @@
 var AuditItems = {
-	curDate: "",
+	curDate: "", 
 	selectTips: '<option value="">请选择</option>',
 	init: function(){
 		this.curDate = new Date();
@@ -100,7 +100,8 @@ var AuditItems = {
 		// 新增事件
 		$("#btnAdd").click(function() {
 			// 初始化模态框中的值
-			 $("#bigRegion_add").find('option:selected').val();
+			$("#bigRegion_add").find('option:selected').val();
+			
 			//模态框的显示
 			$('#myModal').modal('show');
 		});
