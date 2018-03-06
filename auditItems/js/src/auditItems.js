@@ -28,6 +28,10 @@ var AuditItems = {
 		  elem: '#commitDate_add',
 		  theme: '#393D49'
 		});
+		laydate.render({
+		  elem: '#commitDateEdit',
+		  theme: '#393D49'
+		});
 	},
 	initData: function(){
 		var self = this;
@@ -97,14 +101,49 @@ var AuditItems = {
 			$('#tb_departments').bootstrapTable("refresh");
 		});
 		
+		
+		
+		
+		
+		
 		// 新增事件
-		$("#btnAdd").click(function() {
+		$(".btnAdd").click(function() {
 			// 初始化模态框中的值
 			$("#bigRegion_add").find('option:selected').val();
 			
 			//模态框的显示
 			$('#myModal').modal('show');
 		});
+		
+		
+		//导出数据到表格
+		$(".daochu").click(function(){
+			// 大区id
+			var bigAreaId = $("#bigArea").find('option:selected').val();
+			// 学校id
+			var schoolId = $("#schools").find('option:selected').val();
+			// 专业id
+			var subjectId = $("#profession").find('option:selected').val();
+			// 项目开始日期
+			var startInput = $("#startInput").val();
+			// 项目结束日期
+			var endInput = $("#endInput").val();
+			// 字段校验
+			if(!bigAreaId){
+				alert("大区不能为空");
+				return;
+			}
+			if(!schoolId){
+				alert("学校不能为空");
+				return;
+			}
+			if(!subjectId){
+				alert("专业不能为空");
+				return;
+			}
+			window.location.href = "http://20.14.3.47:8082/survey/projectAudit/export?regionid="+bigAreaId+"&schoolid="+schoolId+"&majorid="+subjectId+"&beginDate="+startInput+"&endDate="+endInput;
+		});
+		
 		// 新增模态框的大区change
 		$("#bigRegion_add").change(function(){
 			var checkValue = $(this).find('option:selected').val();
@@ -149,9 +188,11 @@ var AuditItems = {
 			})
 		});
 		// 取消按钮
-		$("#cancelBtn").click(function(){
+		$("#cancelBtn,#abolishBtn").click(function(){
 			self.resetModalValue();
 		});
+		
+		
 		
 		// 保存按钮
 		$("#saveBtn").click(function(){
@@ -251,24 +292,132 @@ var AuditItems = {
 			
 			//发送数据
 			xhr.send(formData);
+		});
+					
+		//编辑提交
+		$("#referBtn").click(function(){
+			
+			// 获取模态框中的数据
+			
+			//数据id
+			var id = $("#none").text();
+			// 大区id
+			//var bigAreaId = $("#bigRegionEdit").find('option:selected').val();
+			// 学校id
+			//var schoolId = $("#schoolEdit").find('option:selected').val();
+			// 专业id
+			//var subjectId = $("#profEdit").find('option:selected').val();
+			// 讲师名称
+			var teacherName = $("#teacherEdit").val();
+			// 班级名称
+			var className = $("#classEdit").val();
+			// 分数
+			var score = $("#scoreEdit").val();
+			// 等级
+			var level = $("#levelEdit").find('option:selected').val();
+			// 人次
+			var personCount = $("#personCountEdit").val();
+			// 审阅状态
+			var shenyueStatus = $("#shenyueStatusEdit").find('option:selected').val();
+			// 双师名称
+			var secondTeacher = $("#secondTeacherEdit").val();
+			// 项目提交日期
+			var commitDate = $("#commitDateEdit").val();
+			// 项目评价
+			var evaluate = $("#evaluateEdit").val();
+			// 原因
+			var reason = $("#reasonEdit").val();
+			// 字段校验
+//			if(!bigAreaId){
+//				alert("大区不能为空");
+//				return;
+//			}
+//			if(!schoolId){
+//				alert("学校不能为空");
+//				return;
+//			}
+//			if(!subjectId){
+//				alert("专业不能为空");
+//				return;
+//			}
+			if(!teacherName){
+				alert("讲师不能为空");
+				return;
+			}
+			if(!className){
+				alert("班级不能为空");
+				return;
+			}
+			if(!shenyueStatus){
+				alert("请选择审阅状态");
+				return;
+			}
+			if(!commitDate){
+				alert("提交日期不能为空");
+				return;
+			}
+			
+			var obj = {
+				id : id,
+				/*regionid: bigAreaId, // 大区id
+				schoolid: schoolId, // 校区id
+				majorid: subjectId, // 专业id*/
+				teachername: teacherName, // 讲师名称
+				onlineteachername: secondTeacher, // 在线老师
+				classname: className, // 班级名称
+				score: score, // 分数
+				rank: level,
+				reason: reason,
+				evaluate: evaluate,
+				stage: "第一阶段",
+				worknum: personCount,
+				state: shenyueStatus,
+				submittime: commitDate // 提交日期
+			};
+			
+						// ajax提交数据
+			// 组装FormData对象
+			var form = document.getElementById("bannerformEdit");
+			var formData = new FormData(form);
+			Object.keys(obj).map(function(key) {
+				formData.append(key, obj[key]);
+			});
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", CommonUtils.saveDataUrl(), true);
+			
+			 //注册相关事件回调处理函数
+			xhr.onload = function(e) { 
+			    if(this.status == 200||this.status == 304){
+			        var res = window.JSON.parse(this.responseText);
+			        alert(res.msg);
+			        self.resetModalValue();
+			        $('#tb_departments').bootstrapTable("refresh");
+			    }
+			};
+			
+			//发送数据
+			xhr.send(formData);
+			
 		})
 	},
+	
 	resetModalValue: function(){
 		//模态框的隐藏
-		$('#myModal').modal('hide');
+		$('#myModal,#myEditModal').modal('hide');
 		// 置空所有字段
-		$("#bigRegion_add").val("");
-		$("#school_add").val("");
-		$("#subject_add").val("");
-		$("#teacher_add").val("");
-		$("#class_add").val("");
-		$("#score_add").val("");
-		$("#personCount_add").val("");
-		$("#secondTeacher_add").val("");
-		$("#commitDate_add").val("");
-		$("#evaluate_add").val("");
-		$("#reason_add").val("");
-		$("#file_add").val("");
+		$("#bigRegion_add,#bigRegionEdit").val("");
+		$("#school_add,#schoolEdit").val("");
+		$("#subject_add,#profEdit").val("");
+		$("#teacher_add,#teacherEdit").val("");
+		$("#class_add,#classEdit").val("");
+		$("#score_add,#scoreEdit").val("");
+		$("#personCount_add,#personCountEdit").val("");
+		$("#secondTeacher_add,#secondTeacherEdit").val("");
+		$("#commitDate_add,#commitDateEdit").val("");
+		$("#evaluate_add,#evaluateEdit").val("");
+		$("#reason_add,#reasonEdit").val("");
+		$("#file_add,#fileEdit").val("");
 	},
 	initTable: function(){
 		// 初始化table
@@ -291,6 +440,20 @@ var AuditItems = {
 			//是否显示搜索
 			search : false,
 			searchAlign : "right",
+			idField: 'APPNO',//key值栏位
+			detailView: true,//详情展示
+			onExpandRow: function(index, row, $detail){
+				 $.ajax({
+                            type: 'GET',
+                            cache: false,
+                            url: CommonUtils.baseUrl+'/projectAudit/detail?id='+row.id,
+                            data: { appNo: row['APPNO']},
+                            success: function (data) {
+                                $detail.html("<p><span style='margin-right:10px'>等级 : </span>"+data.rows.rank+"</p></br><p><span style='margin-right:10px'>评价 : </span>"+data.rows.evaluate+"</p></br><p><span style='margin-right:10px'>原因 : </span>"+data.rows.reason+"</p>");
+                            }
+                        });
+				
+			},
 			queryParams: function(params) {
             	console.log(params);
             	// offset: 偏移量 limit: 每页的数目 order: asc desc
@@ -430,22 +593,58 @@ var AuditItems = {
 				valign : 'middle',
 				formatter : function(value, row, e){
 					return [
-						'<button id="edit" class="btn btn-success btn-xs" type="button">编辑</button>',
+						'<button style="margin-right:10px;" id="edit" class="btn btn-success btn-xs" type="button">编辑</button>',
 						'<button id="remove" class="btn btn-danger btn-xs" type="button">删除</button>'
 					].join('');
 				},
 				events : {
 					"click #remove": function(e, value, row){
-						if(confirm("确定删除这条数据吗？")){
+						if(confirm("确定删除这条数据吗?")){
 							Ajax.deleteData(CommonUtils.deleteDataUrl(), row.id, function(res){
 								alert(res.msg);
 								$('#tb_departments').bootstrapTable("refresh");
 							});
 						}
 					},
+					//编辑事件
 					"click #edit": function(e, value, row){
-						alert(row.id);
+						
+						$("#myEditModal").find('option:selected').val();
+						
+						//模态框的显示
+						$('#myEditModal').modal('show');
+						var id = row.id;
+						$("#none").html(id);
+						var regionName = '<option text="' + row.regionName + '"value="' + row.id + '">' + row.regionName + '</option>';
+						var schoolName = '<option text="' + row.schoolName + '"value="' + row.id + '">' + row.schoolName + '</option>';
+						var majorName = '<option text="' + row.majorName + '"value="' + row.id + '">' + row.majorName + '</option>';
+						
+						//大区
+						$("#bigRegionEdit").html(regionName);
+						//学校
+						$("#schoolEdit").html(schoolName);
+						//专业
+						$("#profEdit").html(majorName);
+						//讲师
+						$("#teacherEdit").val(row.teacherName);
+						//班级
+						$("#classEdit").val(row.className);
+						//分数
+						$("#scoreEdit").val(row.score);
+						//人次
+						$("#personCountEdit").val(row.workNum);
+						//在线老师
+						$("#secondTeacherEdit").val(row.onlineTeacherName);
+						//审阅状态
+						$("#shenyueStatusEdit").val(row.state);
+						//评价
+						$("#evaluateEdit").val(row.evaluate);
+						//原因
+						$("#reasonEdit").val(row.reason);
+						//提交转化后的时间
+						$("#commitDateEdit").val(CommonUtils.timetrans(row.submitTime));
 					}
+					
 				}
 			} ]
 		});
