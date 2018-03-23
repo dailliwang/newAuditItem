@@ -70,8 +70,9 @@ var AuditItems = {
 					var school = res.rows;
 					for (var i = 0; i < school.length; i++) {
 						html += '<option text="' + school[i].schoolname + '"value="' + school[i].id + '">' + school[i].schoolname + '</option>';
-						$("#schools").html(html);
+						
 					}
+					$("#schools").html(html);
 				}
 			})
 		});
@@ -105,14 +106,17 @@ var AuditItems = {
 		
 		
 		
-		
+	
 		// 新增事件
-		$(".btnAdd").click(function() {
+		$("#btnAdd").click(function() {
+			$("#mainPage-inner").hide()
+			
+			///$("#newAddPage-wrapper")
 			// 初始化模态框中的值
-			$("#bigRegion_add").find('option:selected').val();
+			/*$("#bigRegion_add").find('option:selected').val();*/
 			
 			//模态框的显示
-			$('#myModal').modal('show');
+			/*$('#myModal').modal('show');*/
 		});
 		
 		
@@ -651,5 +655,6 @@ var AuditItems = {
 	}
 	
 	
-	
+
 }
+

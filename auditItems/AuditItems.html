@@ -43,8 +43,8 @@
 			</div>
 		</nav>
 		<!-- 主页面  -->
-		<div id="page-wrapper">
-			<div id="page-inner">
+		<div id="page-wrapper" >
+			<div id="page-inner" id="mainPage-inner">
 				<!--主页面头部-->
 				<div class="portlet box grey">
 					<div class="portlet-title">
@@ -105,8 +105,7 @@
 					</div>
 					<div id="btnAdd" style="margin-right: 5px; margin-top: -1px;">
 						<button href="#" class="btn btn-default btnAdd">
-							<span class="glyphicon glyphicon-plus"></span>新增
-							
+							<span class="glyphicon glyphicon-plus"></span>新增	
 						</button>
 						<button  href="#" class="btn btn-default daochu">
 							<span class="glyphicon glyphicon-export icon-share
@@ -119,10 +118,29 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			
+			
+			<!--点击新增按钮的新页面-->
+			<div id="newAddPage-wrapper">
+				<div id="newAddPage-inner">
+					<!--主页面头部-->
+					<div class="portlet box grey">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="icon-user"></i>项目审阅
+							</div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div><!--主页面结束-->
+		</div><!--主页面结束-->
+		
+		
 	</div>
 	<!-- 新增的模态框（Modal） -->
-	<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog">
+<!--	<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -224,10 +242,126 @@
 	        <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
 	        <button id="saveBtn" type="button" class="btn btn-primary">提交</button>
 	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
+	    </div>
+	  </div>
+	</div>-->
+	
+	
+	
+	
+	<!-- 新增的模态框（Modal） -->
+	<!--<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myModal" role="dialog">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content"  >
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">新增数据</h4>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+				<div class="col-xs-12">
+					请输入教师testInfo系统账号：<input name="teacherName" id="teacher_add"
+						style="width:358px; height:28px;"/>
+				</div>	
+			</div>
+	      	<div class="row"  style="margin-top:20px;">
+				<div class="col-xs-6">
+					大&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;区：<select name="daqu" id="bigRegion_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;校：<select name="school" id="school_add"
+						style="width:174px; height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					专&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;业：<select name="subject" id="subject_add"
+						style="width:174px;height:28px;">
+						<option value>请选择</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					在线讲师：<input name="teacherName" id="teacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：<input name="className"  id="class_add"
+						style="width:174px; height:28px;"/>
+				</div>
+				<div class="col-xs-6">
+					分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数：<input name="score" type="number"  id="score_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					等&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：<select name="level"  id="level_add"
+						style="width:174px; height:28px;">
+						<option value="优">优</option>
+						<option value="良">良</option>
+						<option value="中">中</option>
+						<option value="差">差</option>
+					</select>
+				</div>
+				<div class="col-xs-6">
+					人&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;次：<input name="personCount" type="number"  id="personCount_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-6">
+					审阅状态：<select name="shenyueStatus"  id="shenyueStatus_add"
+								style="width:174px; height:28px;">
+								<option value>请选择</option>
+								<option value="未阅">未阅</option>
+								<option value="已阅">已阅</option>
+							</select>
+				</div>
+				<div class="col-xs-6">
+					在线老师：<input name="secondTeacher" id="secondTeacher_add"
+						style="width:174px; height:28px;"/>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目提交日期:
+					<input id="commitDate_add" class="form-control" type="text"></input>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					项目评价:
+					<textarea style="resize: none;" class="form-control" rows="3" id="evaluate_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					原因：<textarea style="resize: none;" class="form-control" rows="3"  id="reason_add"></textarea>
+				</div>
+			</div>
+			<div class="row" style="margin-top:20px;">
+				<div class="col-xs-12">
+					附件：<form class='uploadForm' id='bannerform' enctype='multipart/form-data'>
+							<input name='uploadFile' accept='.doc,.docx,.xlsx,.xls' class="form-control" type="file"  id="file_add"></input>
+						</form>
+				</div>
+			</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
+	        <button id="saveBtn" type="button" class="btn btn-primary">提交</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+-->
 	<!-- 编辑的模态框---------start -->
 	<div class="modal fade  bs-example-modal-lg" tabindex="-1" id="myEditModal" role="dialog">
 	  <div class="modal-dialog" role="document">

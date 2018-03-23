@@ -1,4 +1,5 @@
 $(function() {
+
 	/**页面进来之后的三个下拉框大区+校区+专业，从数据库拿来数据复制给大区**/
 	var GLOBAL = GLOBAL || {};
 	//预置字符串
@@ -277,6 +278,11 @@ $(function() {
 
 	// 新增事件
 	$("#btnAdd").click(function() {
+		alert("111")
+		$("#page-wrapper").hide()
+		
+	}
+	/*$("#btnAdd").click(function() {
 		GLOBAL.type = "新增";
 		//模态框的显示
 		$('#myModal').modal('show');
@@ -314,7 +320,7 @@ $(function() {
 		for (i = 1; i <= 5; i++) {
 			$('.div' + i).hide();
 		}
-	});
+	});*/
 	/**点击提交按钮上传数据**/
 	$("#subm").click(function() {
 		updateAndAddSubm();
